@@ -8,8 +8,6 @@ Simple Hybrid UAV Simulation
 git clone https://github.com/utiasDSL/gym-pybullet-drones.git
 cd gym-pybullet-drones
 pip install -e .
-```
-#### Demo
-```bash
-python examples/pid.py
+# pid example
+python gym_pybullet_drones/examples/pid.py
 ```
