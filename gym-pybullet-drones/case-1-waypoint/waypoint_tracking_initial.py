@@ -108,15 +108,15 @@ history_q = np.array(history_q)
 # --- Figure 1: 3D Spatial Trajectory ---
 fig1 = plt.figure(figsize=(10, 8))
 ax1 = fig1.add_subplot(111, projection='3d')
-ax1.plot(history_pos[:, 0], history_pos[:, 1], history_pos[:, 2], label='Flow Trajectory', color='b', linewidth=2)
-ax1.scatter(WAYPOINTS[:, 0], WAYPOINTS[:, 1], WAYPOINTS[:, 2], color='r', s=100, label='Waypoints', marker='X')
+ax1.plot(history_pos[:, 0], history_pos[:, 1], history_pos[:, 2], label='UAV Trajectory (Continuous Flow)', color='b', linewidth=2)
+ax1.scatter(WAYPOINTS[:, 0], WAYPOINTS[:, 1], WAYPOINTS[:, 2], color='r', s=100, label='Waypoints  (Targets)', marker='X')
 if history_jump_points:
     jp = np.array(history_jump_points)
-    ax1.scatter(jp[:, 0], jp[:, 1], jp[:, 2], color='g', s=80, label='Jump Events', marker='o')
+    ax1.scatter(jp[:, 0], jp[:, 1], jp[:, 2], color='g', s=80, label='Jump Events (Discrete Transitions)', marker='o')
 ax1.set_xlabel('X (m)')
 ax1.set_ylabel('Y (m)')
 ax1.set_zlabel('Altitude Z (m)')
-ax1.set_title('Hybrid System Spatial Evolution')
+ax1.set_title('UAV Hybrid System Simulation (Waypoint Tracking) - Trajectory')
 ax1.legend()
 
 # --- Figure 2: Time-Domain State Evolution (Matching the Paper) ---
