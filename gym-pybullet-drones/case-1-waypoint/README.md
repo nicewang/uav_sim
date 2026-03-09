@@ -106,7 +106,7 @@ $$\mathcal{H} := \begin{cases}
 - **Step 2: Forward Reachability Verification:** Mathematically verify whether the initial state immediately following a discrete jump, $x^+ = g(x)$, safely resides within the established ROA of the subsequent flow map.
 - **Step 3: Trajectory Redesign (Controller Synthesis):** Introduce a sufficiently smooth reference trajectory planner (e.g., a minimum-snap or cubic polynomial interpolator) into $f(x)$. This ensures the instantaneous tracking error remains strictly bounded within the ROA, guaranteeing forward invariance and successful intersection with all subsequent jump sets.
 
-3. Running Logs
+4. Running Logs
 ```log
 pybullet build time: Mar  9 2026 01:33:09
 [INFO] BaseAviary.__init__() loaded parameters from the drone's .urdf:
