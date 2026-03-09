@@ -88,11 +88,15 @@ Within the flow set, the evolution of the system follows the \textbf{differentia
     \item $\dot{v} = \mathcal{F}_{dyn}(p,v,u_{pid}(p,v,W_q))$
   \end{itemize}
   \item For discrete state $q$: $\dot{q}=0$ since $q$ is invariant in flow set
-  \item Physical state is governed jointly by the underlying \textit{rigid body dynamics_ and the _closed-loop PID controller}:
+  \item Physical state is governed jointly by the underlying \textit{rigid body dynamics} and the \textit{closed-loop PID controller}:
 \end{itemize}
 
 \begin{equation}
-  \dot{x} = f(x) = \left[ \matrix{ v \\\ \mathcal{F}_{dyn}(p, v, u_{pid}(p, v, W_q)) \\\ 0 } \right], \quad x \in C
+\dot{x} = f(x) = \begin{bmatrix} 
+v \\
+\mathcal{F}_{dyn}(p, v, u_{pid}(p, v, W_q)) \\ 
+0 
+\end{bmatrix}, \quad x \in C
 \end{equation}
 
 Note:
@@ -124,7 +128,7 @@ When the state $x\in D$, the system undergoes a discrete jump $x^+=g(x)$.
 \end{itemize}
 
 \begin{equation}
-  x^+=g(x)=\begin{bmatrix}p\\\v\\\q+1\end{bmatrix},\quad x\in D
+x^+=g(x)=\begin{bmatrix}p\\v\\q+1\end{bmatrix},\quad x\in D
 \end{equation}
 
 \subsection{Overall Hybrid Automaton Equations}
@@ -178,15 +182,15 @@ When the state $x\in D$, the system undergoes a discrete jump $x^+=g(x)$.
 
 \paragraph{Optimizations}
 \begin{itemize}
-  \item \textbf{Virtual Target Initialization:} Introduced a `virtual_target_pos` state variable initialized exactly at the drone's spawn location:
+  \item \textbf{Virtual Target Initialization:} Introduced a \textit{virtual\_target\_pos} state variable initialized exactly at the drone's spawn location:
   \begin{itemize}
     \item This ensures the \textbf{initial control error is zero},
     \item \textbf{preventing any violent takeoff maneuvers}.
   \end{itemize}
-  \item \textbf{Kinematic Trajectory Generator (Linear Interpolation):} Added a \textbf{smooth interpolation mechanism} \textit{inside} the continuous Flow Map $f(x)$ loop. Instead of instantly switching to the next distant waypoint, the virtual target moves towards the absolute waypoint at a \textbf{constrained, constant velocity} (MAX_SPEED = 0.8 m/s). -> Enhance Stability
+  \item \textbf{Kinematic Trajectory Generator (Linear Interpolation):} Added a \textbf{smooth interpolation mechanism} \textit{inside} the continuous Flow Map $f(x)$ loop. Instead of instantly switching to the next distant waypoint, the virtual target moves towards the absolute waypoint at a \textbf{constrained, constant velocity} (MAX\_SPEED = 0.8 m/s). -> Enhance Stability
   \item \textbf{Elimination of Step-Inputs for the Controller:}
   \begin{itemize}
-    \item Modify the PID controller to track this continuously moving `virtual_target_pos` rather than the absolute `WAYPOINTS[q]`.
+    \item Modify the PID controller to track this continuously moving \textit{virtual\_target\_pos} rather than the absolute \textit{WAYPOINTS[q]}.
     \item By breaking down the large spatial gap into millimeter-level, time-stepped increments, we completely eliminated the massive step-errors that previously caused extreme attitude (pitch/roll/yaw) oscillations and the local stability failure of the underactuated system.
   \end{itemize}
 \end{itemize}
@@ -209,7 +213,7 @@ When the state $x\in D$, the system undergoes a discrete jump $x^+=g(x)$.
 
 \begin{figure}[tb]
   \centering
-  \includegraphics[width=0.95\textwidth]{fig/traj_opt.png}
+  \includegraphics[width=0.95\textwidth]{fig/gui_opt.png}
   \caption{Optimization Exp: Simulation GUI Display}
   \label{fig:gui_opt}
 \end{figure}
