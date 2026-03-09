@@ -89,6 +89,23 @@ $$\mathcal{H} := \begin{cases}
 2. Trajectory
 ![traj](fig/traj.png)
 
+3. Simulation Results Analysis
+
+**Conclusion:** The breakdown of local stability in **underactuated systems** under large step inputs.
+
+**Overview Results Analysis:** As observed in the state and trajectory plots, the UAV successfully tracks the initial waypoints, indicated by the discrete mode transitions ($q = 0 \to 1 \to 2$). However, upon switching to mode $q=2$ (targeting [2.0, 2.0, 1.5]), the large spatial distance introduces a severe step-error to the closed-loop controller. This forces an aggressive attitude adjustment, evident from the violent high-frequency oscillations in the Orientation plot (Roll/Pitch/Yaw) after $t \approx 2s$. The extreme tilt angles cause the vertical thrust component to drop below gravity ($T\cos\theta < mg$), leading to an irreversible altitude loss ($Z \to 0$, as seen in the Position plot). The UAV hits the ground and becomes locked in an unrecoverable physical state, failing to ever enter the $\epsilon$-neighborhood (Jump Set $D$) of the subsequent waypoint. Consequently, the discrete state $q$ permanently stalls at 2.
+
+**Potential Dynamical Properties to Study:** 
+- **Stability (Region of Attraction):** The continuous flow map $f(x)$ utilizing standard PID control is only _locally asymptotically stable_ for **the 6-DOF underactuated system**. It exhibits severe instability under large step inputs due to the coupling between attitude and translational dynamics.
+- **Attractivity (Reachability):** The target jump set $D_{q+1}$ is not attractive from the post-jump initial state $x(t_0)$ under the current flow map. The continuous trajectory diverges to the ground singularity before intersecting $D$.
+- **Robustness:** The current system architecture lacks robustness against actuator saturation (motor RPM limits) and unmodeled ground-effect disturbances when subjected to extreme attitude commands.
+
+**Outline of a Possible Analysis Approach:** 
+
+- **Step 1: Lyapunov-based Stability Analysis:** Construct a Control Lyapunov Function (CLF), denoted as $V(x)$, for the closed-loop continuous dynamics to estimate the **Maximum Region of Attraction (ROA)** regarding the allowable positional tracking error.
+- **Step 2: Forward Reachability Verification:** Mathematically verify whether the initial state immediately following a discrete jump, $x^+ = g(x)$, safely resides within the established ROA of the subsequent flow map.
+- **Step 3: Trajectory Redesign (Controller Synthesis):** Introduce a sufficiently smooth reference trajectory planner (e.g., a minimum-snap or cubic polynomial interpolator) into $f(x)$. This ensures the instantaneous tracking error remains strictly bounded within the ROA, guaranteeing forward invariance and successful intersection with all subsequent jump sets.
+
 3. Running Logs
 ```log
 pybullet build time: Mar  9 2026 01:33:09
@@ -126,5 +143,3 @@ semaphore destroyed
 destroy main semaphore
 main semaphore destroyed
 ```
-![waypoint_tracking](fig/waypoint_tracking.png)
-
