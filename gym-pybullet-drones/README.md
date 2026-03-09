@@ -13,7 +13,7 @@ python gym_pybullet_drones/examples/pid.py
 ```
 ### Simulation
 #### Case 1: Waypoint Tracking
-##### Formula derivation    
+##### Mathematical Model    
 1. State Space (in 3D space)
 - For _Continuous State_:
     - Position: $p\in\mathbb{R}^3$
