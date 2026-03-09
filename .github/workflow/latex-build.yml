@@ -17,16 +17,16 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
-
+          working_directory: tex/
       
       - name: Rename PDF
         run: |
-          old_path="main.pdf"
+          old_path="tex/main.pdf"
           new_name="Hybrid_UAV_Waypoint_Tracking.pdf"
           mv "$old_path" "$new_name"
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Hybrid-UAV-Waypoint-Tracking-pdf
+          name: Hybrid_UAV_Waypoint_Tracking_pdf
           path: Hybrid_UAV_Waypoint_Tracking.pdf
