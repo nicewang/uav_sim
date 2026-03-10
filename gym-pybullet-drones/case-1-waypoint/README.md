@@ -85,6 +85,9 @@ $$\mathcal{H} := \begin{cases}
 \end{cases}$$
 
 #### Simulation Results - Initial Exp
+
+[uav_waypoint_tracking_initial.py](uav_waypoint_tracking_initial.py)
+
 1. State Plot
 ![state plot](fig/state.png)
 
@@ -147,6 +150,8 @@ main semaphore destroyed
 ```
 
 #### Simulation Results - Optimization Exp
+
+[uav_waypoint_tracking_opt.py](uav_waypoint_tracking_opt.py)
 
 1. Optimizations
 
