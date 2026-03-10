@@ -1,6 +1,0 @@
-gymnasium
-torch
-pybullet
-matplotlib
-scipy
-transforms3d
