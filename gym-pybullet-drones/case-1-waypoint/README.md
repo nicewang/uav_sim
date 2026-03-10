@@ -6,6 +6,8 @@ Simple Hybrid UAV Simulation
 
 ### Case 1: Waypoint Tracking
 
+PID based UAV simple waypoint tracking task: _square climbing_.
+
 #### Mathematical Model    
 1. State Space (in 3D space)
 - For _Continuous State_:
