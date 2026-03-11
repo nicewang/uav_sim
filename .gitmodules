@@ -1,0 +1,3 @@
+[submodule "gym-pybullet-drones/gym-pybullet-drones"]
+	path = gym-pybullet-drones/gym-pybullet-drones
+	url = https://github.com/nicewang/gym-pybullet-drones.git
