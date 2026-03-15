@@ -49,7 +49,7 @@ epsilon = 0.15    # Jump tolerance radius (triggers Jump when within 0.15m of th
 
 obs, info = env.reset(seed=42, options={})
 
-# todo: check `[OPTIMIZATION]: Initialize the virtual target position at the drone's spawn location`
+# todo: check `[OPTIMIZATION]: Initialize the virtual target position at ...`
 # [OPTIMIZATION]: Initialize the virtual target position at the drone's spawn location
 virtual_target_pos = obs[0][0:3].copy() 
 
@@ -109,7 +109,7 @@ for i in range(10000):
     # Hybrid System: Execute Flow Map (f) - PID calculation and physical stepping
     # ------------------------------------------------------------
     
-    # todo: check `[MODIFIED]: Upgraded to Model Predictive Control (MPC)`
+    # todo: check `[MODIFIED]: Upgraded to Model Predictive Control ...`
     # [MODIFIED]: Upgraded to Model Predictive Control (MPC)
     # Execute MPC optimization at a specific sampling rate (e.g., every 20 steps) to balance real-time performance and CPU load
     if i % 20 == 0:
@@ -118,7 +118,7 @@ for i in range(10000):
     else:
         optimal_v = mpc_controller.last_u[0:3]
 
-    # todo: chech `[MODIFIED]: Continuously integrate the optimal velocity to advance the virtual target` 
+    # todo: chech `[MODIFIED]: Continuously integrate the optimal velocity ...` 
     # [MODIFIED]: Continuously integrate the optimal velocity to advance the virtual target
     virtual_target_pos = virtual_target_pos + optimal_v * env.CTRL_TIMESTEP
 
