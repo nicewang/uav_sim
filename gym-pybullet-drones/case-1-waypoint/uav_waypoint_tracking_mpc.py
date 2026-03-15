@@ -49,10 +49,7 @@ epsilon = 0.15    # Jump tolerance radius (triggers Jump when within 0.15m of th
 
 obs, info = env.reset(seed=42, options={})
 
-"""
-* @todo [OPTIMIZATION]: Initialize the virtual target position at the drone's spawn location
-* @body Summarize this to README?
-"""
+# todo
 # [OPTIMIZATION]: Initialize the virtual target position at the drone's spawn location
 virtual_target_pos = obs[0][0:3].copy() 
 
