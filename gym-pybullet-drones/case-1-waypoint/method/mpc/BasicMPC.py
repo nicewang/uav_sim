@@ -1,3 +1,12 @@
+"""
+ * @file            gym-pybullet-drones/case-1-waypoint/method/mpc/BasicMPC.py
+ * @description     
+ * @author          nicewang <wangxiaonannice@gmail.com>
+ * @createTime      2026-03-15
+ * @lastModified    2026-03-15
+ * Copyright © Xiaonan (Nice) Wang All rights reserved
+"""
+
 import numpy as np
 from scipy.optimize import minimize
 

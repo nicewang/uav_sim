@@ -1,3 +1,12 @@
+"""
+ * @file            gym-pybullet-drones/case-1-waypoint/uav_waypoint_tracking_initial.py
+ * @description     
+ * @author          nicewang <wangxiaonannice@gmail.com>
+ * @createTime      2026-03-09
+ * @lastModified    2026-03-15
+ * Copyright © Xiaonan (Nice) Wang All rights reserved
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from gym_pybullet_drones.envs.CtrlAviary import CtrlAviary
