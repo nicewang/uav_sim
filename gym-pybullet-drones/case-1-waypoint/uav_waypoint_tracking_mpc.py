@@ -4,7 +4,7 @@
  * @author          nicewang <wangxiaonannice@gmail.com>
  * @createTime      2026-03-15
  * @lastModified    2026-03-15
- * Copyright © Xiaonan (Nice) Wang All rights reserved
+ * Copyright © Xiaonan (Nice) Wang. All rights reserved
 """
 
 import numpy as np
