@@ -1,3 +1,7 @@
 [submodule "gym-pybullet-drones/gym-pybullet-drones"]
 	path = gym-pybullet-drones/gym-pybullet-drones
 	url = https://github.com/nicewang/gym-pybullet-drones.git
+[submodule "model_predictive_control"]
+	path = model_predictive_control
+	url = git@github.com:nicewang/model_predictive_control.git
+	branch = basic_template_py
