@@ -118,7 +118,7 @@ for i in range(10000):
     else:
         optimal_v = mpc_controller.last_u[0:3]
 
-    # todo: chech `[MODIFIED]: Continuously integrate the optimal velocity to advance the virtual target` 
+    # todo: check `[MODIFIED]: Continuously integrate the optimal velocity to advance the virtual target` 
     # [MODIFIED]: Continuously integrate the optimal velocity to advance the virtual target
     virtual_target_pos = virtual_target_pos + optimal_v * env.CTRL_TIMESTEP
 
