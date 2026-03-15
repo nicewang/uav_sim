@@ -13,9 +13,9 @@ from gym_pybullet_drones.envs.CtrlAviary import CtrlAviary
 from gym_pybullet_drones.control.DSLPIDControl import DSLPIDControl
 from gym_pybullet_drones.utils.enums import DroneModel, Physics
 
-# =========================================================================
-# 1. Define Waypoints in the Hybrid System
-# =========================================================================
+# ================================================================================
+# 1. Define Waypoints (Task Setting / Initialization)
+# ================================================================================
 
 # This represents a square climbing trajectory in 3D space
 WAYPOINTS = np.array([
@@ -26,9 +26,9 @@ WAYPOINTS = np.array([
     [0.0, 0.0, 2.0]   # Waypoint 4 (Return above origin and continue climbing)
 ])
 
-# =========================================================================
+# ================================================================================
 # 2. Environment Initialization
-# =========================================================================
+# ================================================================================
 env = CtrlAviary(
     drone_model=DroneModel.CF2X,
     num_drones=1,
@@ -55,9 +55,9 @@ history_jump_points = []
 
 print("Physics engine is computing the hybrid system evolution... Please wait.")
 
-# =========================================================================
-# 2. Main Simulation Loop
-# =========================================================================
+# ================================================================================
+# 3. Main Simulation Loop
+# ================================================================================
 for i in range(10000):
     # Extract the current continuous physical state
     state = obs[0]
@@ -73,17 +73,17 @@ for i in range(10000):
     
     target_pos = WAYPOINTS[q]
     
-    # ----------------------------------------------------
+    # ------------------------------------------------------------
     # Hybrid System: Evaluate Jump Set (D)
     # Condition: The Euclidean distance between current position and target is less than epsilon
-    # ----------------------------------------------------
+    # ------------------------------------------------------------
     dist = np.linalg.norm(pos - target_pos)
     in_jump_set = (dist < epsilon)
     
     if in_jump_set and q < len(WAYPOINTS) - 1:
-        # ----------------------------------------------------
+        # ------------------------------------------------------------
         # Hybrid System: Execute Jump Map (g) - Transition
-        # ----------------------------------------------------
+        # ------------------------------------------------------------
         q += 1
         history_jump_points.append(pos)
         print(f"Jump Triggered! Reached waypoint {q-1}, switching to waypoint {q}. Current coordinates: [{pos[0]:.2f}, {pos[1]:.2f}, {pos[2]:.2f}]")
@@ -93,9 +93,9 @@ for i in range(10000):
         print("All waypoints tracked successfully.")
         break
         
-    # ----------------------------------------------------
+    # ------------------------------------------------------------
     # Hybrid System: Execute Flow Map (f) - PID calculation and physical stepping
-    # ----------------------------------------------------
+    # ------------------------------------------------------------
     
     # [OPTIMIZATION]: Kinematic Trajectory Generator
     # Prevent step-input instability by smoothly interpolating the virtual target
@@ -126,9 +126,9 @@ history_pos = np.array(history_pos)
 history_rpy = np.array(history_rpy)
 history_q = np.array(history_q)
 
-# =========================================================================
-# 4. Visualization: Generating Academic-Grade Figures
-# =========================================================================
+# ================================================================================
+# 4. Visualization: Generating Academic-Level Figures
+# ================================================================================
 
 # --- Figure 1: 3D Spatial Trajectory ---
 fig1 = plt.figure(figsize=(10, 8))
@@ -144,7 +144,7 @@ ax1.set_zlabel('Altitude Z (m)')
 ax1.set_title('UAV Hybrid System Simulation (Waypoint Tracking) - Trajectory')
 ax1.legend()
 
-# --- Figure 2: Time-Domain State Evolution (Matching the Paper) ---
+# --- Figure 2: Time-Domain State Evolution ---
 fig2, axs = plt.subplots(3, 1, figsize=(10, 10), sharex=True)
 
 # Subplot 1: Position
@@ -164,7 +164,7 @@ axs[1].set_ylabel('Orientation (deg)')
 axs[1].legend(loc='upper right')
 axs[1].grid(True, linestyle='--', alpha=0.7)
 
-# Subplot 3: Discrete Mode (using step plot)
+# Subplot 3: Discrete Mode
 axs[2].step(history_t, history_q, where='post', color='k', linewidth=2, label='Mode q')
 axs[2].set_xlabel('Time t (s)')
 axs[2].set_ylabel('Discrete Mode')
