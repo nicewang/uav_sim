@@ -22,6 +22,7 @@ from mpc_python import MPCController
 # 1. Initialization
 # ================================================================================
 
+# todo: extract to `Task Class`, same to `initial` and `opt`
 # ------------------------------------------------------------
 # 1.1 Define Waypoints
 # This represents a square climbing trajectory in 3D space
