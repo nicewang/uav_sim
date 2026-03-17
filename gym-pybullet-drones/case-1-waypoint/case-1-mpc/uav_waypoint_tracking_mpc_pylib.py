@@ -1,9 +1,9 @@
 """
- * @file            gym-pybullet-drones/case-1-waypoint/uav_waypoint_tracking_mpc.py
+ * @file            gym-pybullet-drones/case-1-waypoint/case-1-mpc/uav_waypoint_tracking_mpc_pylib.py
  * @description     
  * @author          nicewang <wangxiaonannice@gmail.com>
  * @createTime      2026-03-15
- * @lastModified    2026-03-17
+ * @lastModified    2026-03-18
  * Copyright © Xiaonan (Nice) Wang. All rights reserved
 """
 
@@ -14,7 +14,14 @@ from gym_pybullet_drones.control.DSLPIDControl import DSLPIDControl
 from gym_pybullet_drones.utils.enums import DroneModel, Physics
 
 # Import Model Predictive Control (MPC) Module
-from method.mpc.BasicMPC import BasicMPC
+from mpc_python import MPCController
+
+import os, sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+
+sys.path.insert(0, parent_dir)
 
 # Import TrajectoryUtils which includes the tasks
 from utils.trajectory_utils import TrajectoryUtils
@@ -53,7 +60,22 @@ virtual_target_pos = obs[0][0:3].copy()
 # ------------------------------------------------------------
 # 1.3 Model Predictive Control (MPC) Initialization
 # ------------------------------------------------------------
-mpc_controller = BasicMPC(ctrl_dt=env.CTRL_TIMESTEP, horizon=4)
+# [MODIFIED]: Setup matrices for the C++ MPC wrapper instead of BasicMPC
+# mpc_controller = BasicMPC(ctrl_dt=env.CTRL_TIMESTEP, horizon=4)
+
+# Define 3D kinematic model: x(k+1) = x(k) + v(k) * dt
+A_mat = np.eye(3)
+B_mat = np.eye(3) * env.CTRL_TIMESTEP
+Q_mat = np.eye(3) * 100.0  # Strong position tracking penalty
+R_mat = np.eye(3) * 0.1    # Moderate control effort (velocity) penalty
+u_min_vec = np.array([-2.0, -2.0, -2.0]) # Velocity limits bounds
+u_max_vec = np.array([2.0, 2.0, 2.0])
+N_horizon = 4
+
+mpc_controller = MPCController(A_mat, B_mat, Q_mat, R_mat, u_min_vec, u_max_vec, N_horizon)
+
+# [MODIFIED]: Cache variable to store the last optimal control since it's not exposed in C++
+last_optimal_v = np.zeros(3)
 
 # Data containers for recording the trajectory for plotting
 history_t = []       # Time t
@@ -112,8 +134,12 @@ for i in range(10000):
     if i % 20 == 0:
         # [MODIFIED]: Plan from the virtual target (the 'carrot') instead of the lagging drone position
         optimal_v = mpc_controller.solve(virtual_target_pos, WAYPOINTS[q])
+        
+        # [MODIFIED]: Cache the solved optimal velocity
+        last_optimal_v = optimal_v.copy()
     else:
-        optimal_v = mpc_controller.last_u[0:3]
+        # [MODIFIED]: Use cached velocity instead of accessing controller internal state
+        optimal_v = last_optimal_v
 
     # todo: check `[MODIFIED]: Continuously integrate the optimal velocity to advance the virtual target` 
     # [MODIFIED]: Continuously integrate the optimal velocity to advance the virtual target
