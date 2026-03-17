@@ -13,6 +13,7 @@ from gym_pybullet_drones.envs.CtrlAviary import CtrlAviary
 from gym_pybullet_drones.control.DSLPIDControl import DSLPIDControl
 from gym_pybullet_drones.utils.enums import DroneModel, Physics
 
+# Import TrajectoryUtils which includes the tasks
 from utils.trajectory_utils import TrajectoryUtils
 
 # ================================================================================

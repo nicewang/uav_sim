@@ -3,7 +3,7 @@
  * @description     
  * @author          nicewang <wangxiaonannice@gmail.com>
  * @createTime      2026-03-15
- * @lastModified    2026-03-15
+ * @lastModified    2026-03-17
  * Copyright © Xiaonan (Nice) Wang. All rights reserved
 """
 
@@ -16,21 +16,18 @@ from gym_pybullet_drones.utils.enums import DroneModel, Physics
 # Import Model Predictive Control (MPC) Module
 from method.mpc.BasicMPC import BasicMPC
 
+# Import TrajectoryUtils which includes the tasks
+from utils.trajectory_utils import TrajectoryUtils
+
 # ================================================================================
 # 1. Initialization
 # ================================================================================
 
 # ------------------------------------------------------------
 # 1.1 Define Waypoints
-# This represents a square climbing trajectory in 3D space
+# Task: Tracking a square climbing trajectory in 3D space
 # ------------------------------------------------------------
-WAYPOINTS = np.array([
-    [0.0, 0.0, 1.0],  # Takeoff point
-    [2.0, 0.0, 1.0],  # Waypoint 1
-    [2.0, 2.0, 1.5],  # Waypoint 2 (Climbing)
-    [0.0, 2.0, 1.5],  # Waypoint 3
-    [0.0, 0.0, 2.0]   # Waypoint 4 (Return above origin and continue climbing)
-])
+WAYPOINTS = TrajectoryUtils.get_square_climbing_waypoints()
 
 # ------------------------------------------------------------
 # 1.2 Environment Initialization

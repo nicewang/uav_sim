@@ -3,7 +3,7 @@
  * @description     
  * @author          nicewang <wangxiaonannice@gmail.com>
  * @createTime      2026-03-09
- * @lastModified    2026-03-15
+ * @lastModified    2026-03-17
  * Copyright © Xiaonan (Nice) Wang. All rights reserved
 """
 
@@ -13,22 +13,22 @@ from gym_pybullet_drones.envs.CtrlAviary import CtrlAviary
 from gym_pybullet_drones.control.DSLPIDControl import DSLPIDControl
 from gym_pybullet_drones.utils.enums import DroneModel, Physics
 
-# ================================================================================
-# 1. Define Waypoints (Task Setting / Initialization)
-# ================================================================================
-
-# This represents a square climbing trajectory in 3D space
-WAYPOINTS = np.array([
-    [0.0, 0.0, 1.0],  # Takeoff point
-    [2.0, 0.0, 1.0],  # Waypoint 1
-    [2.0, 2.0, 1.5],  # Waypoint 2 (Climbing)
-    [0.0, 2.0, 1.5],  # Waypoint 3
-    [0.0, 0.0, 2.0]   # Waypoint 4 (Return above origin and continue climbing)
-])
+# Import TrajectoryUtils which includes the tasks
+from utils.trajectory_utils import TrajectoryUtils
 
 # ================================================================================
-# 2. Environment Initialization
+# 1. Initialization
 # ================================================================================
+
+# ------------------------------------------------------------
+# 1.1 Define Waypoints
+# Task: Tracking a square climbing trajectory in 3D space
+# ------------------------------------------------------------
+WAYPOINTS = TrajectoryUtils.get_square_climbing_waypoints()
+
+# ------------------------------------------------------------
+# 1.2 Environment Initialization
+# ------------------------------------------------------------
 env = CtrlAviary(
     drone_model=DroneModel.CF2X,
     num_drones=1,
@@ -56,7 +56,7 @@ history_jump_points = []
 print("Physics engine is computing the hybrid system evolution... Please wait.")
 
 # ================================================================================
-# 3. Main Simulation Loop
+# 2. Main Simulation Loop
 # ================================================================================
 for i in range(10000):
     # Extract the current continuous physical state
@@ -127,7 +127,7 @@ history_rpy = np.array(history_rpy)
 history_q = np.array(history_q)
 
 # ================================================================================
-# 4. Visualization: Generating Academic-Level Figures
+# 3. Visualization: Generating Academic-Level Figures
 # ================================================================================
 
 # --- Figure 1: 3D Spatial Trajectory ---
