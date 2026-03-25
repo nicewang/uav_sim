@@ -3,7 +3,7 @@
  * @description     
  * @author          nicewang <wangxiaonannice@gmail.com>
  * @createTime      2026-03-15
- * @lastModified    2026-03-18
+ * @lastModified    2026-03-25
  * Copyright © Xiaonan (Nice) Wang. All rights reserved
 """
 
@@ -60,8 +60,6 @@ virtual_target_pos = obs[0][0:3].copy()
 # ------------------------------------------------------------
 # 1.3 Model Predictive Control (MPC) Initialization
 # ------------------------------------------------------------
-# [MODIFIED]: Setup matrices for the C++ MPC wrapper instead of BasicMPC
-# mpc_controller = BasicMPC(ctrl_dt=env.CTRL_TIMESTEP, horizon=4)
 
 # Define 3D kinematic model: x(k+1) = x(k) + v(k) * dt
 A_mat = np.eye(3)
